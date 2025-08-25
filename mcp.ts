@@ -11,3 +11,17 @@ const server = new McpServer({
 });
 
 // Add an addition tool
+server.registerTool<{
+    a: z.ZodNumber;
+    b: z.ZodNumber;
+}, z.ZodRawShape>(
+    "add",
+    {
+        title: "Addition Tool",
+        description: "A tool that adds two numbers",
+        inputSchema: { a: z.number(), b: z.number() },
+    },
+    async ({ a, b }) => ({
+        content: [{ type: 'text', text: String(a + b) }],
+    })
+)
